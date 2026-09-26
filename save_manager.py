@@ -103,3 +103,79 @@ def dict_to_character(data):
     restore_statistics(character, data["statistics"])
     restore_inventory(character, data["inventory"])
     return character
+
+def validate_save_data(data):
+    required_keys = ["name", "class", "health", "mana", "strength", "defense", "level", "experience", "max_experience", "gold", "max_health", "max_mana", "statistics", "inventory"]
+    if not isinstance(data, dict):
+        raise InvalidSaveDataError
+    for key in required_keys:
+        if key not in data:
+            raise InvalidSaveDataError
+    if not isinstance(data["name"], str) or not isinstance(data["class"], str):
+        raise InvalidSaveDataError
+    numeric_keys = ["health", "mana", "strength", "defense", "level", "experience", "max_experience", "gold", "max_health", "max_mana"]
+    for key in numeric_keys:
+        if not isinstance(data[key], int):
+            raise InvalidSaveDataError
+    for key in numeric_keys:
+        if data[key] < 0:
+            raise InvalidSaveDataError
+    if data["level"] < 1:
+        raise InvalidSaveDataError
+    if data["max_experience"] <= 0:
+        raise InvalidSaveDataError
+    validate_statistics_data(data["statistics"])
+    validate_inventory_data(data["inventory"])
+    if data["name"].strip() == "":
+        raise InvalidSaveDataError
+    valid_classes = ["Warrior",  "Mage", "Archer"]
+    if data["class"] not in valid_classes:
+        raise InvalidSaveDataError
+    if data["health"] > data["max_health"]:
+        raise InvalidSaveDataError
+    if data["mana"] > data["max_mana"]:
+        raise InvalidSaveDataError
+
+def validate_statistics_data(statistics_data):
+    stat_keys = ["enemies_killed", "bosses_killed", "rooms_completed", "gold_earned", "damage_taken"]
+    if not isinstance(statistics_data, dict):
+        raise InvalidSaveDataError
+    for key in stat_keys:
+        if key not in statistics_data:
+            raise InvalidSaveDataError
+        if not isinstance(statistics_data[key], int):
+            raise InvalidSaveDataError
+        if statistics_data[key] < 0:
+            raise InvalidSaveDataError
+
+def validate_item_data(item_data):
+    item_keys_str = ["name", "item_type"]
+    item_keys = item_keys_str + ["value", "effect_value"]
+    if not isinstance(item_data, dict):
+        raise InvalidSaveDataError
+    for key in item_keys:
+        if key not in item_data:
+            raise InvalidSaveDataError
+    for key_str in item_keys_str:
+        if not isinstance(item_data[key_str], str):
+            raise InvalidSaveDataError
+        if item_data[key_str].strip() == "":
+            raise InvalidSaveDataError
+
+    if not isinstance(item_data["value"], int):
+        raise InvalidSaveDataError
+    if item_data["value"] < 0:
+        raise InvalidSaveDataError
+
+    if item_data["effect_value"] is not None:
+        if not isinstance(item_data["effect_value"], int) or item_data["effect_value"] < 0:
+            raise InvalidSaveDataError
+
+def validate_inventory_data(inventory_data):
+    if not isinstance(inventory_data, list):
+        raise InvalidSaveDataError
+    for item in inventory_data:
+        validate_item_data(item)
+
+
+

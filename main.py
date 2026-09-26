@@ -83,6 +83,7 @@ def new_game():
 def load_game():
     try:
         character_data = save_manager.load_save_data()
+        save_manager.validate_save_data(character_data)
     except SaveNotFoundError:
         print("Файл сохранения не найден!")
         return
