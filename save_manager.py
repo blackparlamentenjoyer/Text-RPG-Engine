@@ -1,6 +1,7 @@
 import json
 from character import Character
 from item import Item
+from exceptions import SaveNotFoundError, InvalidSaveDataError
 
 def character_to_dict(character):
     dict_character = {
@@ -63,8 +64,13 @@ def save_character(character):
 
 
 def load_save_data():
-    with open("save.json", "r", encoding="utf-8") as file:
-        return json.load(file)
+    try:
+        with open("save.json", "r", encoding="utf-8") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        raise SaveNotFoundError
+    except json.JSONDecodeError:
+        raise InvalidSaveDataError
 
 
 def restore_statistics(character, statistics_data):

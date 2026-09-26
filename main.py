@@ -1,4 +1,4 @@
-
+from exceptions import SaveNotFoundError, InvalidSaveDataError
 from character import Character
 from dungeon import Dungeon
 from combat import combat
@@ -81,7 +81,14 @@ def new_game():
     play_game(character)
 
 def load_game():
-    character_data = save_manager.load_save_data()
+    try:
+        character_data = save_manager.load_save_data()
+    except SaveNotFoundError:
+        print("Файл сохранения не найден!")
+        return
+    except InvalidSaveDataError:
+        print("Файл сохранения поврежден!")
+        return
     loaded_character = save_manager.dict_to_character(character_data)
     play_game(loaded_character)
 
