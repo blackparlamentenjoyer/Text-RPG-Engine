@@ -1,7 +1,13 @@
 import json
+import logging
+
+import character
 from character import Character
 from item import Item
 from exceptions import SaveNotFoundError, InvalidSaveDataError
+
+
+logger = logging.getLogger(__name__)
 
 def character_to_dict(character):
     dict_character = {
@@ -61,6 +67,7 @@ def save_character(character):
     character_data = character_to_dict(character)
     with open("save.json", "w", encoding="utf-8") as file:
         json.dump(character_data, file, indent=4, ensure_ascii=False)
+    logger.info(f"Character {character.name} successfully saved")
 
 
 def load_save_data():
@@ -68,8 +75,10 @@ def load_save_data():
         with open("save.json", "r", encoding="utf-8") as file:
             return json.load(file)
     except FileNotFoundError:
+        logger.warning(f"Не удалось найти файл save.json: отсутствует JSON")
         raise SaveNotFoundError
     except json.JSONDecodeError:
+        logger.exception("Не удалось прочитать save.json: повреждён JSON")
         raise InvalidSaveDataError
 
 

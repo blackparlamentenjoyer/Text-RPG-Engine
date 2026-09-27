@@ -1,10 +1,15 @@
+import save_manager
+import logging
+
 from exceptions import SaveNotFoundError, InvalidSaveDataError
 from character import Character
 from dungeon import Dungeon
 from combat import combat
 from loot import generate_loot
 from event import random_event
-import save_manager
+
+logging.basicConfig(level=logging.DEBUG, filename="game.log", filemode='a', encoding='utf-8', format='%(asctime)s | %(name)s | %(levelname)s | %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+logger = logging.getLogger(__name__)
 
 dungeon_rooms_value = 5 #для удобства вынес жесть
 
@@ -70,6 +75,7 @@ def create_character(character_name, character_class):
             character = Character(character_name, character_class, 30, 10, 50, 500)
         case "Archer":
             character = Character(character_name, character_class, 15, 15, 100, 50)
+    logger.info(f"Создан персонаж {character_name} класса {character_class}")
     return character
 
 
@@ -91,6 +97,7 @@ def load_game():
         print("Файл сохранения поврежден!")
         return
     loaded_character = save_manager.dict_to_character(character_data)
+    logger.info(f"Загружен персонаж {loaded_character.name}")
     play_game(loaded_character)
 
 
@@ -109,6 +116,7 @@ def play_game(character):
             combat(character, current_room.enemy)
             if not character.is_alive():
                 print("Проиграл")
+                logger.warning(f"Персонаж {character.name} погиб в подземелье")
                 break
             else:
                 character.statistics.add_enemy_kills()
@@ -124,6 +132,7 @@ def play_game(character):
             combat(character, current_room.enemy)
             if not character.is_alive():
                 print("Проиграл")
+                logger.warning(f"Персонаж {character.name} погиб в подземелье")
                 break
             else:
                 character.statistics.add_boss_kills()
@@ -132,6 +141,7 @@ def play_game(character):
             random_event(character)
             if not character.is_alive():
                 print("Проиграл")
+                logger.warning(f"Персонаж {character.name} погиб в подземелье")
                 break
 
         current_room.complete_room()
@@ -142,7 +152,7 @@ def play_game(character):
     save_manager.save_character(character)
     return character
 
-
+logger.info("Игра началась")
 while True:
     menu()
     should_exit = choice_menu_option()
