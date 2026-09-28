@@ -7,7 +7,7 @@ items = {
     3: {'name': 'Эсса 0.5', 'item_type': 'Potion', 'value': 25, 'effect_value' : 50}
 }
 
-def generate_loot():
+def generate_loot() -> Item | None:
     raw_item = random.choice(list(items.values()))
 
     generated_item = Item(raw_item['name'], raw_item['item_type'], raw_item['value'], raw_item['effect_value'])

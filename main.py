@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 dungeon_rooms_value = 5 #для удобства вынес жесть
 
-def menu():
+def menu() -> None:
     print("======================")
     print("      TEXT RPG        ")
     print("======================")
@@ -22,7 +22,7 @@ def menu():
     print("2. Load Game")
     print("3. Exit")
 
-def choice_menu_option():
+def choice_menu_option() -> bool:
     option = input("Выберите опцию: ")
     if option == "1":
         new_game()
@@ -37,7 +37,7 @@ def choice_menu_option():
         print("Please enter a valid option")
         return False
 
-def character_name_choice():
+def character_name_choice() -> str:
     while True:
         raw_character_name = input("Назовите персонажа: ")
         character_name = raw_character_name.strip()
@@ -47,7 +47,7 @@ def character_name_choice():
             break
     return character_name
 
-def character_class_choice():
+def character_class_choice() -> str:
     print("Выберите класс персонажа")
     print("1. Warrior  2. Mage  3. Archer")
     while True:
@@ -67,7 +67,7 @@ def character_class_choice():
                 continue
     return character_class
 
-def create_character(character_name, character_class):
+def create_character(character_name: str, character_class: str) -> Character:
     match character_class:
         case "Warrior":
             character = Character(character_name, character_class, 100, 5, 200, 0)
@@ -79,14 +79,14 @@ def create_character(character_name, character_class):
     return character
 
 
-def new_game():
+def new_game() -> None:
     character_name = character_name_choice()
     character_class = character_class_choice()
     character = create_character(character_name, character_class)
     character.describe_character()
     play_game(character)
 
-def load_game():
+def load_game() -> None:
     try:
         character_data = save_manager.load_save_data()
         save_manager.validate_save_data(character_data)
@@ -102,7 +102,7 @@ def load_game():
 
 
 
-def play_game(character):
+def play_game(character : Character) -> Character:
     dungeon = Dungeon()
     dungeon.generate_dungeon(dungeon_rooms_value)
     while True:

@@ -1,7 +1,7 @@
 import json
 import logging
 
-import character
+from statistics import Statistics
 from character import Character
 from item import Item
 from exceptions import SaveNotFoundError, InvalidSaveDataError
@@ -32,7 +32,7 @@ def character_to_dict(character):
 
     return dict_character
 
-def statistics_to_dict(statistics):
+def statistics_to_dict(statistics: Statistics) -> dict[str, int]:
     dict_statistics = {
         "enemies_killed" : statistics.enemies_killed,
         "bosses_killed" : statistics.bosses_killed,

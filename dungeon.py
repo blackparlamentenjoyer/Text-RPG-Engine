@@ -21,7 +21,7 @@ class Dungeon:
             print(f'Комната {index}: {room.room_type}')
         print("==================================")
 
-    def generate_dungeon(self, amount):
+    def generate_dungeon(self, amount: int) -> None:
         self.rooms = []
         self.current_room_index = 0
         if amount > 0:
@@ -35,7 +35,7 @@ class Dungeon:
                     self.add_room(Room('Event'))
             self.add_room(Room(boss_room, generate_boss()))
 
-    def get_current_room(self):
+    def get_current_room(self) -> Room | None:
         if self.current_room_index <= len(self.rooms) - 1:
             return self.rooms[self.current_room_index]
         else:
