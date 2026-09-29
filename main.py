@@ -1,9 +1,14 @@
 import logging
-r
+
+from pathlib import Path
 from game.core.game import new_game, load_game
 
-logging.basicConfig(level=logging.DEBUG, filename="game.log", filemode='a', encoding='utf-8', format='%(asctime)s | %(name)s | %(levelname)s | %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+path = Path(__file__).resolve().parent
+log_path = path / "game.log"
+
+logging.basicConfig(level=logging.DEBUG, filename=log_path, filemode='a', encoding='utf-8', format='%(asctime)s | %(name)s | %(levelname)s | %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 logger = logging.getLogger(__name__)
+
 
 def menu() -> None:
     print("======================")

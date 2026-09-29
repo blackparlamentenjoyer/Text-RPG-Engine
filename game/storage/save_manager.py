@@ -1,13 +1,18 @@
 import json
 import logging
 
+from pathlib import Path
 from game.models.statistics import Statistics
 from game.models.character import Character
 from game.models.item import Item
 from game.exceptions.exceptions import SaveNotFoundError, InvalidSaveDataError
+from game.models.inventory import INVENTORY_MAX_CAPACITY
 
-
+path = Path(__file__).resolve().parent.parent.parent
+save_path = path / "save.json"
 logger = logging.getLogger(__name__)
+
+
 
 def character_to_dict(character):
     dict_character = {
@@ -65,14 +70,14 @@ def inventory_to_list(inventory):
 
 def save_character(character):
     character_data = character_to_dict(character)
-    with open("save.json", "w", encoding="utf-8") as file:
+    with open(save_path, "w", encoding="utf-8") as file:
         json.dump(character_data, file, indent=4, ensure_ascii=False)
     logger.info(f"Character {character.name} successfully saved")
 
 
 def load_save_data():
     try:
-        with open("save.json", "r", encoding="utf-8") as file:
+        with open(save_path, "r", encoding="utf-8") as file:
             return json.load(file)
     except FileNotFoundError:
         logger.warning(f"Не удалось найти файл save.json: отсутствует JSON")
@@ -124,7 +129,7 @@ def validate_save_data(data):
         raise InvalidSaveDataError
     numeric_keys = ["health", "mana", "strength", "defense", "level", "experience", "max_experience", "gold", "max_health", "max_mana"]
     for key in numeric_keys:
-        if not isinstance(data[key], int):
+        if not isinstance(data[key], int) or isinstance(data[key], bool):
             raise InvalidSaveDataError
     for key in numeric_keys:
         if data[key] < 0:
@@ -152,7 +157,7 @@ def validate_statistics_data(statistics_data):
     for key in stat_keys:
         if key not in statistics_data:
             raise InvalidSaveDataError
-        if not isinstance(statistics_data[key], int):
+        if not isinstance(statistics_data[key], int) or isinstance(statistics_data[key], bool):
             raise InvalidSaveDataError
         if statistics_data[key] < 0:
             raise InvalidSaveDataError
@@ -171,17 +176,19 @@ def validate_item_data(item_data):
         if item_data[key_str].strip() == "":
             raise InvalidSaveDataError
 
-    if not isinstance(item_data["value"], int):
+    if not isinstance(item_data["value"], int) or isinstance(item_data["value"], bool):
         raise InvalidSaveDataError
     if item_data["value"] < 0:
         raise InvalidSaveDataError
 
     if item_data["effect_value"] is not None:
-        if not isinstance(item_data["effect_value"], int) or item_data["effect_value"] < 0:
+        if not isinstance(item_data["effect_value"], int) or item_data["effect_value"] < 0 or isinstance(item_data["effect_value"], bool):
             raise InvalidSaveDataError
 
 def validate_inventory_data(inventory_data):
     if not isinstance(inventory_data, list):
+        raise InvalidSaveDataError
+    if len(inventory_data) > INVENTORY_MAX_CAPACITY:
         raise InvalidSaveDataError
     for item in inventory_data:
         validate_item_data(item)

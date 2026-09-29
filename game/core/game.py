@@ -79,4 +79,7 @@ def load_game() -> None:
         return
     loaded_character = save_manager.dict_to_character(character_data)
     logger.info(f"Загружен персонаж {loaded_character.name}")
-    play_game(loaded_character)
+    if loaded_character.is_alive():
+        play_game(loaded_character)
+    else:
+        print("Невозможно продолжить игру: персонаж мёртв.")

@@ -1,5 +1,6 @@
 from game.models.inventory import Inventory
 from game.models.statistics import Statistics
+from game.models.inventory import INVENTORY_MAX_CAPACITY
 
 class Character:
 
@@ -19,7 +20,7 @@ class Character:
         self.max_health = max_health
         self.max_mana = max_mana
 
-        self.inventory = Inventory(10)
+        self.inventory = Inventory(INVENTORY_MAX_CAPACITY)
         self.statistics = Statistics()
     def describe_character(self):  #решил сделать так как удобнее
         print('== == == == == == == == == ==')

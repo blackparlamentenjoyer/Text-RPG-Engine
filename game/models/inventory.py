@@ -1,3 +1,5 @@
+INVENTORY_MAX_CAPACITY = 10
+
 class Inventory:
     def __init__(self, max_capacity):
         self.items = []
