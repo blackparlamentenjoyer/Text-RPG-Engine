@@ -6,30 +6,17 @@
     "strength": 150,
     "defense": 105,
     "level": 6,
-    "experience": 75,
+    "experience": 0,
     "max_experience": 100,
-    "gold": 245,
+    "gold": 225,
     "max_health": 450,
     "max_mana": 0,
     "statistics": {
-        "enemies_killed": 2,
+        "enemies_killed": 0,
         "bosses_killed": 1,
         "rooms_completed": 5,
-        "gold_earned": 245,
+        "gold_earned": 225,
         "damage_taken": 100
     },
-    "inventory": [
-        {
-            "name": "Эсса 0.5",
-            "item_type": "Potion",
-            "value": 25,
-            "effect_value": 50
-        },
-        {
-            "name": "Найк худак",
-            "item_type": "Armor",
-            "value": 50,
-            "effect_value": 0
-        }
-    ]
+    "inventory": []
 }

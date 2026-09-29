@@ -49,5 +49,7 @@ class Dungeon:
 
 
 
-
+    def iter_rooms(self):
+        for room in self.rooms:
+            yield room
 

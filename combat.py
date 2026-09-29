@@ -1,4 +1,4 @@
-from loot import generate_loot
+from decorators import log_call
 
 def damage_calculator(amount_strength, amount_defense):
     amount_damage = amount_strength
@@ -8,7 +8,7 @@ def damage_calculator(amount_strength, amount_defense):
     else:
         amount_damage = 1
     return amount_damage
-
+@log_call
 def combat(character, enemy):
     character_damage = damage_calculator(character.strength, enemy.defense)
     enemy_damage = damage_calculator(enemy.strength, character.defense)
