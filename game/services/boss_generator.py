@@ -1,5 +1,5 @@
 import random
-from enemy import Enemy
+from game.models.enemy import Enemy
 
 bosses = {
     1: {'name': 'Dungeon Lord', 'strength': 35, 'defense': 25, 'max_health' : 300, 'experience_reward': 500, 'gold_reward': 200},

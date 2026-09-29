@@ -1,5 +1,5 @@
-from inventory import Inventory
-from statistics import Statistics
+from game.models.inventory import Inventory
+from game.models.statistics import Statistics
 
 class Character:
 

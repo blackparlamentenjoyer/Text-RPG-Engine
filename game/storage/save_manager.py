@@ -1,10 +1,10 @@
 import json
 import logging
 
-from statistics import Statistics
-from character import Character
-from item import Item
-from exceptions import SaveNotFoundError, InvalidSaveDataError
+from game.models.statistics import Statistics
+from game.models.character import Character
+from game.models.item import Item
+from game.exceptions.exceptions import SaveNotFoundError, InvalidSaveDataError
 
 
 logger = logging.getLogger(__name__)

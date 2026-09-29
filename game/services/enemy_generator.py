@@ -1,5 +1,5 @@
 import random
-from enemy import Enemy
+from game.models.enemy import Enemy
 
 enemies = {
     1: {'name': 'Skeleton', 'strength': 5, 'defense': 0, 'max_health' : 50, 'experience_reward': 10, 'gold_reward': 5},

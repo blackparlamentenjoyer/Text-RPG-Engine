@@ -1,8 +1,8 @@
 import random
 
-from boss_generator import generate_boss
-from enemy_generator import generate_enemy
-from room import Room
+from game.services.boss_generator import generate_boss
+from game.services.enemy_generator import generate_enemy
+from game.dungeon.room import Room
 
 room_types = ['Enemy', 'Empty', 'Event']
 boss_room = 'Boss'

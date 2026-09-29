@@ -6,17 +6,24 @@
     "strength": 150,
     "defense": 105,
     "level": 6,
-    "experience": 0,
+    "experience": 50,
     "max_experience": 100,
-    "gold": 225,
+    "gold": 255,
     "max_health": 450,
     "max_mana": 0,
     "statistics": {
-        "enemies_killed": 0,
+        "enemies_killed": 1,
         "bosses_killed": 1,
         "rooms_completed": 5,
-        "gold_earned": 225,
-        "damage_taken": 100
+        "gold_earned": 255,
+        "damage_taken": 95
     },
-    "inventory": []
+    "inventory": [
+        {
+            "name": "Найк худак",
+            "item_type": "Armor",
+            "value": 50,
+            "effect_value": 0
+        }
+    ]
 }

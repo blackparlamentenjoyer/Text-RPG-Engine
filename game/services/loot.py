@@ -1,5 +1,5 @@
 import random
-from item import Item
+from game.models.item import Item
 
 items = {
     1: {'name': 'Ножик', 'item_type': "Weapon", 'value': 50, 'effect_value' : 0},

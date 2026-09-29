@@ -1,4 +1,4 @@
-from decorators import log_call
+from game.utils.decorators import log_call
 
 def damage_calculator(amount_strength, amount_defense):
     amount_damage = amount_strength
